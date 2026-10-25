@@ -1,0 +1,18 @@
+# 运行时产物（不进仓库）
+.venv/
+.profile/
+logs/
+报告/
+__pycache__/
+*.pyc
+*.pyo
+data/learned_answers.json
+*.out
+*.log
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

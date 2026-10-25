@@ -1,0 +1,702 @@
+{
+ "1258522436": {
+  "title": "在线练习4",
+  "attempts": 3,
+  "questions": [
+   {
+    "stem": "两个串相等的充要条件是（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "两个字符串的长度相等且对应位置上的字符也相等",
+    "nOpts": 4
+   },
+   {
+    "stem": "已知串 S=‘aaab',其next函数值为（ ）。 ‎",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "0123",
+    "nOpts": 4
+   },
+   {
+    "stem": "模式串‘ababaaababaa'的next函数值为（ ）。 ​",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "011234223456",
+    "nOpts": 4
+   },
+   {
+    "stem": "函数strcmp('stcabuc','stbabuc')的返回值是（ ）。 ‌",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "1",
+    "nOpts": 4
+   },
+   {
+    "stem": "模式串 t=‘abcaabbcabcaabdab'，该模式串的next函数值为（ ）。 ‍",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "0 1 1 1 2 2 3 1 1 2 3 4 5 6 7 1 2",
+    "nOpts": 4
+   },
+   {
+    "stem": "设正文串长度为n，模式串长度为m，则模式匹配的KMP算法的时间复杂度为（ ）。 ​ ‏ ​",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "O(m+n)",
+    "nOpts": 4
+   },
+   {
+    "stem": "S1='good'，S2='morning'，执行函数SubStr(S2,4,LenStr(S1))后的结果为( )。 ‌",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "'ning'",
+    "nOpts": 4
+   },
+   {
+    "stem": "若串S='SOFT'，其子串的数目最多是（ ） 。 ‌",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "11",
+    "nOpts": 4
+   },
+   {
+    "stem": "设串S1='ABCDEFG'，S2='PQRST' ,则ConcatStr(SubStr(S1,2,LenStr(S2)),SubStr(S1,LenStr(S2),2))的结果串为( )。 ‏",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "'BCDEFEF'",
+    "nOpts": 4
+   },
+   {
+    "stem": "某串的长度小于一个常数，则采用（ ）存储方式最节省空间。 ​",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "顺序",
+    "nOpts": 4
+   },
+   {
+    "stem": "串是一种数据对象特殊的线性表。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "KMP算法的特点是在模式匹配时指示主串的指针不会回溯。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "如果两个串含有相同的字符，则说明它们相等。 ‌",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "子串的定位运算称为串的模式匹配。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "串'student'和'Student'相等。 ‍",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   }
+  ],
+  "verified": "满分"
+ },
+ "1258518553": {
+  "title": "在线练习5",
+  "attempts": 3,
+  "questions": [
+   {
+    "stem": "设有一个10阶的对称矩阵A，采用下三角的压缩存储方式，以行序为主序，a[1][1]为第一元素，其存储地址为1，每个元素占一个地址空间，则a[8][5]的地址为（ ）。 ‎",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "33",
+    "nOpts": 4
+   },
+   {
+    "stem": "二维数组A的每个元素都是6个字符组成的串，行下标i的范围从0到8，列下标j的范围从1到10，则如果A按行存放元素A[8][5]的起始地址与A按列存放时元素（ ）的起始地址一致。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "A[3][10]",
+    "nOpts": 4
+   },
+   {
+    "stem": "若对n阶对称矩阵A，下标从1开始，以列序为主序方式将其上三角形的元素依次存放于一维数组B［1..(n(n+1))/2］中，则在B中确定a[i][j](1≤i，j≤n，且i≤j)的位置k的计算公式为( )。 ‏",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "j(j-l)/2+i",
+    "nOpts": 4
+   },
+   {
+    "stem": "设广义表L=（（a,b,c）），则L的长度和深度分别为（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "1和2",
+    "nOpts": 4
+   },
+   {
+    "stem": "下面说法不正确的是( )。 ‎",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "广义表的表头总是一个广义表",
+    "nOpts": 4
+   },
+   {
+    "stem": "广义表运算式Tail(((a,b),(c,d)))的操作结果是（ ）。 ‌",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "((c,d))",
+    "nOpts": 4
+   },
+   {
+    "stem": "广义表（（a,b,c,d））的表尾是（ ）。 ‏",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "（）",
+    "nOpts": 4
+   },
+   {
+    "stem": "数组A[0..4,-3..-1,5..7]中含有元素的个数（ ）。 ‍",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "45",
+    "nOpts": 4
+   },
+   {
+    "stem": "数组A[0..5,0..6]的每个元素占5个字节，将其按列序为主序存储在起始地址为1000的内存单元中，则元素A[5][5]的地址是( )。 ​",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "1175",
+    "nOpts": 4
+   },
+   {
+    "stem": "tail（head（（（a,b,c,d,e））））=__________。 ​ ‎ ​",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "(b,c,d,e)",
+    "nOpts": 4
+   },
+   {
+    "stem": "从逻辑结构上看，n维数组的每个元素均属于n个向量。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "一个稀疏矩阵Am*n采用三元组顺序表形式表示，若把三元组中有关行下标与列下标的值互换，并把m和n的值互换，则就完成了Am*n的转置运算。 ‎",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "广义表B = (a, B) = (a, (a, (a, ××× , ) ) ) 的长度为无穷大。 ‍ ‎ ‍",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "一个非空广义表的表尾一定还是广义表。 ‌",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "稀疏矩阵中非零元素的个数远小于矩阵中元素的总数。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   }
+  ],
+  "verified": "满分"
+ },
+ "1258519553": {
+  "title": "在线练习7",
+  "attempts": 3,
+  "questions": [
+   {
+    "stem": "一个具有n个顶点的无向图最多有（ ）边。 ‌",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "n(n-1)/2",
+    "nOpts": 4
+   },
+   {
+    "stem": "对于一个具有n个顶点和e条边的无向图，若采用邻接表表示，则占用的存储空间为（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "n+2e",
+    "nOpts": 4
+   },
+   {
+    "stem": "设图G有n个顶点和e条边，采用邻接表存储，则拓扑排序算法的时间复杂度为（ ）。 ‏",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "O(n+e)",
+    "nOpts": 4
+   },
+   {
+    "stem": "下面不正确的说法是（ ）。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "任何一个关键活动提前完成，将使整个工程提前完成",
+    "nOpts": 4
+   },
+   {
+    "stem": "图G是一个非连通无向图，共有28条边，则该图至少有（ ）个顶点。 ‏",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "9",
+    "nOpts": 4
+   },
+   {
+    "stem": "已知一个图的邻接矩阵表示，删除所有从第i个顶点出发的弧方法是（ ）。 ‎",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "将矩阵第i行上的元素全部置0",
+    "nOpts": 4
+   },
+   {
+    "stem": "在图的表示法中，表示形式唯一的是（ ）。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "邻接矩阵表示法",
+    "nOpts": 4
+   },
+   {
+    "stem": "有8个结点的有向完全图有( )条边。 ‍",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "56",
+    "nOpts": 4
+   },
+   {
+    "stem": "下图是（ ）。 ‍ ‍ ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "连通图",
+    "nOpts": 4
+   },
+   {
+    "stem": "如下图所示，从顶点a出发，按广度优先进行遍历，则可能得到的一种顶点序列为（ )。 ‎ ​ ‎",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "a，b，e，c，d，f",
+    "nOpts": 4
+   },
+   {
+    "stem": "图可以没有边，但不能没有顶点。 ‍",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "关键路径上的活动都是关键活动，它们是否按时完成会影响工期。 ‍",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "迪杰斯特拉算法求最短路径时，是按照路径长度递增的顺序求解的。 ‏",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "任何一个有向图都一定存在拓扑序列。 ‍",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "有向图不能进行广度优先遍历。 ‏",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   }
+  ],
+  "verified": "满分"
+ },
+ "1258518363": {
+  "title": "单元测试2",
+  "attempts": 2,
+  "questions": [
+   {
+    "stem": "树最适合用来表示的结构是（ ）。 ‎",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "元素间具有分支及层次关系的结构",
+    "nOpts": 4
+   },
+   {
+    "stem": "设一棵二叉树的结点个数为18，则它的高度至少为（ ）。 ‎",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "5",
+    "nOpts": 4
+   },
+   {
+    "stem": "任意一棵二叉树的叶子结点在其先序、中序、后序序列中的相对位置（ ）。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "肯定不发生变化",
+    "nOpts": 4
+   },
+   {
+    "stem": "由权值分别为9、2、5、7、4的5个叶子结点构造一棵哈夫曼树，则该树的带权路径长度为（ ）。 ​ ​",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "60",
+    "nOpts": 4
+   },
+   {
+    "stem": "设T是一棵哈夫曼树，有8个叶结点，则树T的高度最高可以是（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "8",
+    "nOpts": 4
+   },
+   {
+    "stem": "算术表达式a+b*（c+d/e）转为后缀表达式为（ ）。 ‌",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "abcde/+*+",
+    "nOpts": 4
+   },
+   {
+    "stem": "一棵哈夫曼树共有215个结点，对其进行哈夫曼编码，共能得到（ ）个不同的码字。 ‏",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "108",
+    "nOpts": 4
+   },
+   {
+    "stem": "一棵具有N个结点的二叉树采用二叉链表进行存储，其中空指针域有( )个。 ‏ ‏",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "N+1",
+    "nOpts": 4
+   },
+   {
+    "stem": "已知一棵度为3的树有2个度为1的结点，3个度为2的结点，4个度为3的结点，则该树中有（ ）个叶子结点。 ​",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "12",
+    "nOpts": 4
+   },
+   {
+    "stem": "以数据集{4，5，6，7，10，12，18}为叶结点权值所构造的哈夫曼树，其带权路径长度为（ ）。 ​",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "165",
+    "nOpts": 4
+   },
+   {
+    "stem": "已知一算术表达式的中缀形式为 A+B*C-D/E，后缀形式为ABC*+DE/-，其前缀形式为（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "-+A*BC/DE",
+    "nOpts": 4
+   },
+   {
+    "stem": "设a=6,b=4,c=2,d=3,e=2，则后缀表达式abc-/de*+的值为（ ）。 ‍",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "9",
+    "nOpts": 4
+   },
+   {
+    "stem": "若二叉树有n个结点，当执行中序遍历的递归程序时，在最坏情况下为处理递归调用所设的栈需要（ ）个单元。 ‌",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "n",
+    "nOpts": 4
+   },
+   {
+    "stem": "若串S= 'software',其前缀真子串的数目是（ ）。 ‎",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "7",
+    "nOpts": 4
+   },
+   {
+    "stem": "模式串‘ababaaababaa'的next函数值为（ ）。 ‏",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "011234223456",
+    "nOpts": 4
+   },
+   {
+    "stem": "StrIndex(‘Index of String’,1,‘Str’）=( ) 。 ‍",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "10",
+    "nOpts": 4
+   },
+   {
+    "stem": "假设以行序为主序存储二维数组A=array[1..100，1..100]，设每个数组元素占2个存储单元，基地址为10，则LOC[5，5]=（ ）。 ‍",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "818",
+    "nOpts": 4
+   },
+   {
+    "stem": "对下述矩阵进行压缩存储后，失去随机存取功能的是（ ）。 ‌",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "稀疏矩阵",
+    "nOpts": 4
+   },
+   {
+    "stem": "完全二叉树一定存在度为1的结点。 ‌",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "一棵二叉树中，中序遍历序列的最后一个结点，必定是该二叉树前序遍历的最后一个结点。 ‌",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "串的存储结构有顺序串、堆串和块链串三种。 ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "串中任意个字符组成的子序列称为该串的子串。 ‌",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "一个广义表的表头一定还是个广义表。 ​",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "数组可看成线性结构的一种推广，因此与线性表一样，可以对它进行插入，删除等操作。 ‍",
+    "type": "judge",
+    "ans": "F",
+    "ansText": "错误",
+    "nOpts": 2
+   },
+   {
+    "stem": "多维数组可以看作是一种特殊的线性表。 ‍",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   }
+  ],
+  "verified": "120/125（25题错1，未定位）"
+ },
+ "1258518552": {
+  "title": "单元测试1",
+  "attempts": 2,
+  "questions": [
+   {
+    "stem": "‏设栈S和队列Q的初始状态为空，元素e1，e2，e3，e4，e5和e6依次通过栈S，一个元素出栈后随即进入队列Q，若6个元素出队的序列是e2，e4，e3，e6，e5，e1，则栈S的容量至少应该是( )。 ‍",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "3",
+    "nOpts": 4
+   },
+   {
+    "stem": "​函数递归调用时，处理参数及返回地址需要用一种（ ）的数据结构。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "栈",
+    "nOpts": 4
+   },
+   {
+    "stem": "​若用一个大小为6的数组来实现循环队列，且当前rear和front的值分别为3和1，当从队列中删除一个元素再加入两个元素后，rear和front的值为( )。 ‎",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "5和2",
+    "nOpts": 4
+   },
+   {
+    "stem": "假设以数组A[m]存放循环队列的元素,其头、尾指针分别为front和rear，front指示实际的队头元素，rear指向实际队尾元素的下一个元素位置，则当前队列中的元素个数为（ ）。 ‏",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "(rear-front+m)%m",
+    "nOpts": 4
+   },
+   {
+    "stem": "下列说法正确的是（ ）。 ‍ (1)只有使用了局部变量的递归函数在转换成非递归函数时才必须使用栈。 ‍ (2)队列是插入与删除操作在表的两端进行的线性表，具有先进后出的特点。 ‍ (3)队列是一端进行删除另外一端进行插入的线性表。 ‍ (4)循环队列也存在空间溢出问题。 ‍",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "(3)(4)",
+    "nOpts": 4
+   },
+   {
+    "stem": "一个栈的输入序列为1 2 3 4 5，则下列序列中不可能是栈的输出序列的是（ ）。 ‍",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "5 4 1 3 2",
+    "nOpts": 4
+   },
+   {
+    "stem": "‎在双向链表（结点包括：data,prior,next）中，删除指针p所指向的结点时须修改指针（ ）。 ‏",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "p->prior->next=p->next;p->next->prior=p->prior;",
+    "nOpts": 4
+   },
+   {
+    "stem": "‎ ​ ‎循环队列存储在数组A[0..m-1]中，则入队时rear应该变化为（ ）。 ​",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "rear=(rear+1) mod m;",
+    "nOpts": 4
+   },
+   {
+    "stem": "‎链表不具有的特点是（ ）。 ‌",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "可随机访问任意元素",
+    "nOpts": 4
+   },
+   {
+    "stem": "‌设某顺序表中第一个元素的地址是Base，下标从1开始，每个结点占m个单元，则第i个结点的地址为（ ）。 ‌",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "Base+(i-1)×m",
+    "nOpts": 4
+   },
+   {
+    "stem": "​两个栈共享一片连续内存空间时，为提高内存利用率，减少溢出，应把两个栈的栈底分别设在这片内存空间的两端。（ ） ‏",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "‎任何一个递归过程都可以转换成非递归过程。（ ） ‏",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "‏ 两顺序栈共享空间，也存在空间溢出问题。（ ） ‏",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "‍栈和队列的存储方式，既可以是顺序方式，也可以是链式方式。（ ） ​",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "‏线性表的链式存储结构中，逻辑上相邻的两个元素在物理位置上并不一定相邻。 ‌",
+    "type": "judge",
+    "ans": "T",
+    "ansText": "正确",
+    "nOpts": 2
+   },
+   {
+    "stem": "栈和队都是（）。",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "限制存取点的线性结构",
+    "nOpts": 4
+   },
+   {
+    "stem": "最大容量为n的循环队列，队尾指针为rear，队头指针为front，则队空的条件是（）。",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "rear==front",
+    "nOpts": 4
+   },
+   {
+    "stem": "假设以数组A[m]存放循环队列的元素,其头、尾指针分别为front和rear，front指示实际的队头元素，rear指向实际队尾元素的下一个元素位置，则当前队列中的元素个数为（）。",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "(rear-front+m)%m",
+    "nOpts": 4
+   },
+   {
+    "stem": "一个递归算法必须包括（）。",
+    "type": "choice",
+    "ans": "B",
+    "ansText": "递归条件和递归体",
+    "nOpts": 4
+   },
+   {
+    "stem": "一个栈的输入序列为12345，则下列序列中不可能是栈的输出序列的是（）。‎",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "54132",
+    "nOpts": 4
+   },
+   {
+    "stem": "一个栈的输入序列为1,2,3,…,n，若输出序列的第一个元素是i，则元素j（1<=j<=i）的输出位置不小于（）。",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "i-j+1",
+    "nOpts": 4
+   },
+   {
+    "stem": "‏‏循环队列存储在数组A[0..m-1]中，则入队时rear应该变化为（）。",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "rear=(rear+1)modm;",
+    "nOpts": 4
+   },
+   {
+    "stem": "当利用大小为n的数组顺序存储一个栈时，假定用top=n表示栈空，则每次向这个栈插入一个元素时，首先应执行（）语句修改top指针。",
+    "type": "choice",
+    "ans": "C",
+    "ansText": "top--;",
+    "nOpts": 4
+   },
+   {
+    "stem": "设某顺序表中第一个元素的地址是Base，下标从1开始，每个结点占m个单元，则第i个结点的地址为（）。",
+    "type": "choice",
+    "ans": "D",
+    "ansText": "Base+(i-1)×m",
+    "nOpts": 4
+   },
+   {
+    "stem": "数据结构在计算机内存中的表示是指（）。‎",
+    "type": "choice",
+    "ans": "A",
+    "ansText": "数据的存储结构",
+    "nOpts": 4
+   }
+  ],
+  "verified": "第2次 75/75；含第1次选择题"
+ }
+}
