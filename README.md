@@ -8,18 +8,33 @@
 
 ---
 
+## ⚡ 30 秒版
+
+1. 本页右上角 **`< > 代码`** → **`下载 ZIP`**
+2. 解压到英文路径（如 `D:\mooc-shuake-assistant`）
+3. 装好 Python（安装时**勾选 Add python.exe to PATH**）
+4. 双击 **`一键开始.bat`** → 浏览器里登录一次 → 窗口输入 **`1`**
+
+不需要 Git、不需要命令行、不需要任何 AI 账号。
+
+---
+
 ## 一、下载 & 运行（三步）
 
-### 1. 拉代码
+### 1. 下载 ZIP（不用装 Git）
 
-装了 Git 的话：
+1. 打开本页 → 点右上角绿色 **`< > 代码`** 按钮
+2. 弹出菜单最下面点 **`下载 ZIP`**
+3. 解压到任意**英文路径**，比如 `D:\mooc-shuake-assistant`（别放桌面、别放中文目录）
 
-```bash
-git clone https://github.com/CYQ111999/mooc-shuake-assistant.git
-cd mooc-shuake-assistant
-```
+解压后目录里应该直接看到 `一键开始.bat`、`main.py`、`moocbot`、`data`。
 
-没装 Git：直接点页面右上角 **Code → Download ZIP**，解压到任意**英文路径**（比如 `D:\mooc-shuake-assistant`，别放桌面中文目录）。
+> 会 Git 的话也可以 `git clone https://github.com/CYQ111999/mooc-shuake-assistant.git`，效果一样。
+
+**解压后 .bat 打不开 / 被系统拦住？**
+右键 ZIP 文件 → 属性 → 最下面勾上「解除锁定」→ 确定，再解压一次；
+已经解压过的话，右键 `一键开始.bat` → 属性 → 勾「解除锁定」。
+Windows 提示"已保护你的电脑"就点 **更多信息 → 仍要运行**。
 
 ### 2. 确认有 Python
 
