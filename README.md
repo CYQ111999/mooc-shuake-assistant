@@ -131,6 +131,32 @@ data/             内置题库
 
 ## 六、常见问题
 
+### ⚠️ 报错 `failed to create venv` / `Unable to create process using '...python.exe...'`
+
+这是**最常见**的一个报错，不是工具的问题，是你电脑上 Python 的安装坏了。典型长这样：
+
+```
+[1/3] Python found: py -3
+      creating local virtual environment ...
+Unable to create process using 'C:\Users\xxx\AppData\Local\Python\pythoncore-3.14-64\python.exe -m venv .venv'
+[ERROR] failed to create venv
+```
+
+原因：`py` 这个启动器还在，但它指向的 `python.exe` 已经不存在了（安装没装完、卸载没卸干净、或者装的是微软商店版）。
+
+**解决（3 分钟）：**
+
+1. 打开 <https://www.python.org/downloads/>，下载 **Windows installer (64-bit)** 的 **Python 3.12**
+2. 运行安装包，**务必勾选底部的 `Add python.exe to PATH`**，其他一路下一步
+3. 关掉黑窗口，重新双击 `一键开始.bat`
+
+> 不要用微软商店（Microsoft Store）里的 Python，`venv` 经常出问题。
+> 也建议避开 Python 3.14 —— 部分依赖包还没跟上。
+
+v1.1 起启动器会自动跳过坏掉的 `py`、去找真正能用的 Python，找不到时直接打印上面这段指引并自动打开下载页。
+
+### 其他问题
+
 **双击闪退 / 说没 Python**
 装 Python 时勾上 `Add python.exe to PATH`，然后重新双击。
 

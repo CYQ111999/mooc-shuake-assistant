@@ -90,6 +90,22 @@
 ----------------------------------------------------------
 【常见问题】
 ----------------------------------------------------------
+Q：报错 failed to create venv，或者 Unable to create process
+   using 'C:\...\python.exe -m venv .venv'？
+A：这是最常见的一个报错，不是工具的问题，是你电脑上的 Python 坏了。
+   py 启动器还在，但它指向的 python.exe 已经不存在（安装没装完、卸载
+   没卸干净、或者装的是微软商店版）。
+
+   解决（3 分钟）：
+     1. 打开 https://www.python.org/downloads/
+     2. 下载 Windows installer (64-bit) 的 Python 3.12
+     3. 运行安装包，务必勾选底部的 “Add python.exe to PATH”
+     4. 关掉黑窗口，重新双击「一键开始.bat」
+
+   不要用微软商店里的 Python；也建议避开 Python 3.14。
+   v1.1 版启动器会自动跳过坏掉的 py、去找真正能用的 Python，
+   找不到时会直接把这段指引打印出来并打开下载页。
+
 Q：双击闪退 / 提示没有 Python？
 A：装 Python 时勾上 “Add python.exe to PATH”，重开「一键开始.bat」。
 
