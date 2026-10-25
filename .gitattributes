@@ -1,0 +1,16 @@
+# Windows 批处理必须用 CRLF，否则 GitHub 的 "Download ZIP" 给到的是 LF，
+# 双击后 cmd 解析 goto / 多行 ( ) 块会出错
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# 其余文本统一 LF
+*.py    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+
+# 二进制
+*.png   binary
+*.jpg   binary
+*.zip   binary
