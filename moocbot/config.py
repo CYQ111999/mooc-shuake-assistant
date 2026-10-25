@@ -37,6 +37,10 @@ EXPIRED = set(COURSE.get('expiredAssess', []))
 LEARN_URL = f"{BASE}/learn/{KEY}?tid={TERM}"
 OUTLINE_API = (f"/front-mooc-learn/api/learn/terms/{TERM}/content-outline"
                f"?courseKey={KEY}&entryMode=learn")
+# 绝对地址：停在登录页时也能直接查登录态（同源 fetch，不影响页面）
+OUTLINE_ABS = BASE + OUTLINE_API
+# 未登录时直接停在这里等，避免 /learn/ 被重定向到公开课程页反复跳转
+LOGIN_URL = f"{BASE}/member/login.htm#/webLoginIndex"
 
 for _d in (PROFILE_DIR, LOG_DIR, REPORT_DIR):
     os.makedirs(_d, exist_ok=True)

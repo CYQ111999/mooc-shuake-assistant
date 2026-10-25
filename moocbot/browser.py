@@ -44,55 +44,170 @@ def outline(page):
         return {'_err': str(e)}
 
 
-def is_ready(page):
-    """能拿到目录 = 已登录且有权限"""
-    d = outline(page)
+def is_ready(page, absolute=False):
+    """能拿到目录 = 有权限访问这门课（注意：未登录也可能返回目录，不能用来判断登录）"""
+    api = config.OUTLINE_ABS if absolute else config.OUTLINE_API
+    try:
+        d = page.evaluate(js.OUTLINE, api)
+    except Exception:
+        return False
     return bool(d and isinstance(d, dict) and d.get('result', {}).get('chapters'))
 
 
-def ensure_login(page, minutes=12):
-    """打开课程页并等用户登录，直到能读到课程目录"""
-    log('正在打开课程页面…')
-    try:
-        page.goto(config.LEARN_URL, wait_until='domcontentloaded', timeout=90000)
-    except Exception as e:
-        log('打开超时，重试一次：', str(e)[:80])
-        page.wait_for_timeout(3000)
-        page.goto(config.LEARN_URL, wait_until='domcontentloaded', timeout=90000)
-    page.wait_for_timeout(4000)
-    if is_ready(page):
-        log('已登录，课程数据读取成功')
-        return True
+# 登录后才会写入的 cookie（注意域名是 .icourse163.com / .icourse163.cn，不是 .org）
+LOGIN_COOKIES = ('STUDY_SESS', 'STUDY_INFO')
+COURSE_DOMAINS = ('icourse163.org', 'icourse163.com', 'icourse163.cn')
 
-    log('')
-    log('*' * 72)
-    log('  请在浏览器窗口里登录中国大学MOOC（扫码或账号密码都行）。')
-    log('  登录成功后脚本会自动继续，不用关闭窗口、也不用回来点任何按钮。')
-    log('  （如果提示“立即参加/加入课程”，说明还没选这门课，先点加入再等着）')
-    log('*' * 72)
-    deadline = time.time() + minutes * 60
-    dots = 0
-    joined_hint = False
-    while time.time() < deadline:
+
+def has_login_cookie(page):
+    """只看 cookie，不碰页面 —— 等待登录时完全不会干扰用户操作"""
+    try:
+        cks = page.context.cookies()
+    except Exception:
+        return False
+    for c in cks:
+        if c.get('name') in LOGIN_COOKIES:
+            d = c.get('domain') or ''
+            if any(k in d for k in COURSE_DOMAINS):
+                return True
+    return False
+
+
+def _landed_learn(page):
+    """真正进入学习页 = 已登录且已选修（未登录会被重定向到 /course/ 公开页）"""
+    u = page.url
+    return '/learn/' in u and '/course/' not in u
+
+
+def _login_ok(page):
+    """登录判定的组合规则，尽量不误判"""
+    if _landed_learn(page):
+        return True
+    if '/course/' in page.url:      # 被送去公开课程页 = 没登录或没选课
+        return False
+    return has_login_cookie(page) and is_ready(page)
+
+
+def _kbhit():
+    if os.name != 'nt':
+        return False
+    try:
+        import msvcrt
+        return msvcrt.kbhit()
+    except Exception:
+        return False
+
+
+def _drain_key():
+    """吃掉一个按键；回车只产生一个字符，不能盲读两次（会卡住等输入）"""
+    try:
+        import msvcrt
+        ch = msvcrt.getwch()
+        if ch in ('\x00', '\xe0'):      # 方向键等功能键的第二字节
+            msvcrt.getwch()
+    except Exception:
+        pass
+
+
+def _goto(page, url, tries=2, wait='domcontentloaded', timeout=90000):
+    for i in range(tries):
+        try:
+            page.goto(url, wait_until=wait, timeout=timeout)
+            return True
+        except Exception as e:
+            if i == tries - 1:
+                log('打开页面失败：', str(e).splitlines()[0][:100])
+            else:
+                page.wait_for_timeout(2500)
+    return False
+
+
+def ensure_login(page, minutes=15):
+    """确认登录状态。
+
+    这里踩过三个坑，都在这修掉了：
+      1. 未登录访问 /learn/ 会被重定向到「公开课程页」，那页的 hash 路由会连跳
+         好几次，看起来像网页一直在刷新，而且那页没有登录入口 —— 未知登录态时
+         改为停在登录页等，等待期间不导航。
+      2. 课程目录接口**不登录也返回章节**，不能当登录判据。
+      3. 光有登录 cookie 也不够（会话可能已过期，只能看到未完成的目录）——
+         最终以「能不能进 /learn/ 学习页」为准。
+    """
+    log('正在检查登录状态…')
+    if _goto(page, config.LEARN_URL):
+        page.wait_for_timeout(2500)
+        if _landed_learn(page):
+            log('已登录，开始干活')
+            return True
+
+    had_cookie = has_login_cookie(page)
+    if had_cookie:
+        # 有登录记录但进不了学习页：多半是没选修，或者会话过期
+        log('')
+        log('=' * 74)
+        log('  检测到登录记录，但没能进入学习页。请二选一：')
+        log('    · 还没加入这门课  → 在页面上点「立即参加 / 加入课程」')
+        log('    · 登录已经过期    → 点右上角「登录」重新登一次')
+        log('  弄好之后按一下【回车】，我马上重新检查（也可以什么都不按，我会自动轮询）')
+        log('=' * 74)
+        log('')
+    else:
+        # 完全没登录：停在登录页等，不刷新不跳转
+        if not _goto(page, config.LOGIN_URL):
+            log('!! 打不开登录页，请检查网络后重试')
+            return False
         page.wait_for_timeout(3000)
-        if is_ready(page):
-            log('')
+        log('')
+        log('=' * 74)
+        log('  请在这个浏览器窗口里登录中国大学 MOOC')
+        log('  · 页面已停在【登录页】，不会再自动刷新，慢慢扫码或输密码都行')
+        log('  · 登录成功后脚本会自动继续，不用关窗口、不用回来点按钮')
+        log('=' * 74)
+        log('')
+
+    deadline = time.time() + minutes * 60
+    waited = 0
+    while time.time() < deadline:
+        page.wait_for_timeout(2000)
+        waited += 2
+
+        if _landed_learn(page):
             log('登录成功，开始干活')
             return True
-        dots += 1
-        if dots % 5 == 0:
-            try:
-                body = page.evaluate("() => (document.body.innerText||'').slice(0,3000)")
-            except Exception:
-                body = ''
-            if (not joined_hint) and ('立即参加' in body or '加入课程' in body):
-                joined_hint = True
-                log('')
-                log('  >> 看起来这门课还没加入：请在页面上点「立即参加 / 加入课程」，'
-                    '加入成功后脚本会自动继续。')
-        if dots % 10 == 0:
-            log(f'  仍在等待登录…（已等 {dots * 3} 秒）')
-    log('等待登录超时，请重新运行')
+
+        # 新登录：cookie 刚出现 → 只主动跳一次学习页
+        if (not had_cookie) and has_login_cookie(page):
+            had_cookie = True
+            log('检测到登录成功，正在打开课程…')
+            _goto(page, config.LEARN_URL)
+            page.wait_for_timeout(3000)
+            if _landed_learn(page):
+                log('课程数据读取成功，开始干活')
+                return True
+            log('')
+            log('  已登录，但没进到学习页。如果显示「立即参加」，请点它加入课程；')
+            log('  加入后按一下【回车】我再检查一次。')
+            log('')
+
+        # 用户按回车 → 立刻再检查一次
+        if _kbhit():
+            _drain_key()
+            log('收到回车，重新检查…')
+            _goto(page, config.LEARN_URL)
+            page.wait_for_timeout(2500)
+            if _landed_learn(page):
+                log('课程数据读取成功，开始干活')
+                return True
+            if not has_login_cookie(page):
+                log('  还是没登录上，请再登一次，或按回车重试。')
+            else:
+                log('  还是进不去学习页，检查一下这门课是否已经「加入课程」。')
+
+        if waited % 20 == 0:
+            left = max(int((deadline - time.time()) // 60), 0)
+            log(f'  仍在等待…（已等 {waited} 秒，最多再等 {left} 分钟）')
+
+    log('等待超时。可以重新运行 —— 登录态会记住，不用重复登录。')
     return False
 
 
