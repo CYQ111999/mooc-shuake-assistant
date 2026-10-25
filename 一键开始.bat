@@ -8,7 +8,7 @@ set "PIP_DISABLE_PIP_VERSION_CHECK=1"
 set "MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple"
 
 echo ==================================================
-echo    MOOC  ShuaKe  Assistant   v1.2
+echo    MOOC  ShuaKe  Assistant   v1.3
 echo    (first run needs internet, about 1-3 minutes)
 echo ==================================================
 echo.

@@ -20,20 +20,30 @@ INIT_SCRIPT = "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});
 def launch(pw, headless=False):
     """优先用系统 Edge，其次 Chrome，最后 Playwright 自带 Chromium"""
     os.makedirs(config.PROFILE_DIR, exist_ok=True)
+    if os.path.exists(os.path.join(config.PROFILE_DIR, 'SingletonLock')):
+        log('提示：登录态目录里还有锁文件，可能是上次浏览器没关干净。')
+        log('      如果下面启动失败，把残留的 Edge 窗口全部关掉再跑。')
     last = None
     for channel in ('msedge', 'chrome', None):
+        name = channel or 'chromium'
+        log(f'正在启动浏览器（{name}），最多等 30 秒…')
         try:
             ctx = pw.chromium.launch_persistent_context(
                 config.PROFILE_DIR, headless=headless, channel=channel,
                 args=_ARGS, viewport={'width': 1600, 'height': 950},
-                locale='zh-CN')
+                locale='zh-CN', timeout=30000)
             ctx.add_init_script(INIT_SCRIPT)
-            log(f'浏览器已启动（{channel or "chromium"}）')
+            log(f'浏览器窗口已打开（{name}）')
             return ctx
         except Exception as e:
             last = e
-            log(f'启动 {channel or "chromium"} 失败：{str(e).splitlines()[0][:110]}')
-    raise RuntimeError(f'没有可用的浏览器，请安装 Microsoft Edge 后重试。\n{last}')
+            log(f'  {name} 启动失败：{str(e).splitlines()[0][:110]}')
+    raise RuntimeError(
+        '一个浏览器都启动不起来。请按顺序试：\n'
+        '  1) 关掉所有 Edge 窗口（含后台残留），再运行一次\n'
+        f'  2) 删掉登录态目录后重试：{config.PROFILE_DIR}\n'
+        '  3) 确认电脑上有 Microsoft Edge 或 Chrome\n'
+        f'最后一次错误：{last}')
 
 
 def outline(page):
@@ -134,6 +144,7 @@ def ensure_login(page, minutes=15):
          最终以「能不能进 /learn/ 学习页」为准。
     """
     log('正在检查登录状态…')
+    log('正在打开课程页（最多等 90 秒）…')
     if _goto(page, config.LEARN_URL):
         page.wait_for_timeout(2500)
         if _landed_learn(page):
@@ -203,9 +214,15 @@ def ensure_login(page, minutes=15):
             else:
                 log('  还是进不去学习页，检查一下这门课是否已经「加入课程」。')
 
-        if waited % 20 == 0:
+        if waited % 6 == 0:
             left = max(int((deadline - time.time()) // 60), 0)
-            log(f'  仍在等待…（已等 {waited} 秒，最多再等 {left} 分钟）')
+            mm, ss = divmod(waited, 60)
+            tip = '等待你登录' if not had_cookie else '等待你加入课程 / 重新登录'
+            log(f'  ⏳ {tip}…  已等 {mm:02d}:{ss:02d}，还剩 {left} 分钟'
+                f'（在浏览器里操作，好了我会自动继续）')
+            if waited == 30 and not has_login_cookie(page):
+                log('     看不到登录页内容的话，点一下浏览器的刷新按钮；'
+                    '或者换手机热点再试。')
 
     log('等待超时。可以重新运行 —— 登录态会记住，不用重复登录。')
     return False

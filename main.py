@@ -94,8 +94,12 @@ def main():
     code = 0
     try:
         with sync_playwright() as pw:
+            log('')
+            log('—— 第 1 步：启动浏览器（会弹出一个窗口，别关它）——')
+            log(f'   登录态目录：{config.PROFILE_DIR}')
             ctx = browser.launch(pw, headless=args.headless)
             page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            log('—— 第 2 步：检查登录状态 ——')
             try:
                 if not browser.ensure_login(page):
                     log('未检测到登录状态，任务结束')
