@@ -26,6 +26,10 @@
    右键 ZIP → 属性 → 最下面勾「解除锁定」→ 确定，再解压一次；
    提示「已保护你的电脑」时点“更多信息 → 仍要运行”。
 
+   注意：ZIP 有约 40MB，体积几乎全在 wheels 离线依赖包上。
+   换来的是第一次运行不用联网，也不会再报「装不上 playwright」。
+   wheels 文件夹别删。
+
 2) 电脑上要有 Python 3.10 或更高版本
    没有的话去 https://www.python.org/downloads/ 下载安装，
    安装界面务必勾选 “Add python.exe to PATH”，然后重启本文件夹。

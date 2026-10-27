@@ -29,6 +29,9 @@
 
 解压后目录里应该直接看到 `一键开始.bat`、`main.py`、`moocbot`、`data`。
 
+> ZIP 有 **约 40 MB**，体积几乎全在 `wheels/` 离线依赖包上。
+> 换来的是**第一次运行不用联网**，也不会再出现「装不上 playwright」的报错。别删这个文件夹。
+
 > 会 Git 的话也可以 `git clone https://github.com/CYQ111999/mooc-shuake-assistant.git`，效果一样。
 
 **解压后 .bat 打不开 / 被系统拦住？**
