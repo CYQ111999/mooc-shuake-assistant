@@ -38,12 +38,13 @@ Windows 提示"已保护你的电脑"就点 **更多信息 → 仍要运行**。
 
 ### 2. 确认有 Python
 
-需要 **Python 3.9+**。没有的话去 <https://www.python.org/downloads/> 装，
+需要 **Python 3.10+**。没有的话去 <https://www.python.org/downloads/> 装，
 ⚠️ 安装界面**务必勾选** `Add python.exe to PATH`。
 
 ### 3. 双击 `一键开始.bat`
 
-- 首次运行会自动建虚拟环境 + 装依赖，约 **1~3 分钟**（需联网）
+- 首次运行会自动建虚拟环境 + 装依赖，约 **1~2 分钟**
+- ZIP 里自带 `wheels` 离线依赖包，**断网也能装**，装不上才会去网上找
 - 之后每次启动基本秒开
 - 弹出的浏览器里**登录一次**中国大学 MOOC（扫码/账号密码都行）
 - 回到窗口按 **`1`**（一键全自动），剩下的它自己干
@@ -107,7 +108,9 @@ Windows 提示"已保护你的电脑"就点 **更多信息 → 仍要运行**。
 一键开始.bat      启动器（自动建虚拟环境、装依赖、找 Edge）
 main.py           主程序（菜单 + 命令行）
 requirements.txt  playwright>=1.40.0
+_netcheck.py      依赖装不上时的网络自检（只在报错时被调用）
 使用说明.txt      给不看 README 的人看的纯文本版
+wheels/           离线依赖包（playwright 等），断网也能装
 moocbot/          核心代码
   browser.py        浏览器启动、登录检测
   courseware.py     视频 / PDF / 讨论
@@ -151,9 +154,31 @@ Unable to create process using 'C:\Users\xxx\AppData\Local\Python\pythoncore-3.1
 3. 关掉黑窗口，重新双击 `一键开始.bat`
 
 > 不要用微软商店（Microsoft Store）里的 Python，`venv` 经常出问题。
-> 也建议避开 Python 3.14 —— 部分依赖包还没跟上。
+> Python 3.14 也能用（依赖包已确认支持），但 3.12 是最稳的。
 
 v1.1 起启动器会自动跳过坏掉的 `py`、去找真正能用的 Python，找不到时直接打印上面这段指引并自动打开下载页。
+
+### ⚠️ 报错 `Could not find a version that satisfies the requirement playwright (from versions: none)`
+
+```
+[2/3] installing dependencies ...
+ERROR: Could not find a version that satisfies the requirement playwright>=1.40.0 (from versions: none)
+ERROR: No matching distribution found for playwright>=1.40.0
+```
+
+**这不是 Python 版本不兼容，是网络没连上 PyPI**（`from versions: none` = 一个版本都没拿到，说明请求根本没到服务器）。
+常见原因：校园网/代理、360 或火绒拦了 python.exe 联网、DNS 被劫持。
+
+`v1.4` 的处理顺序是：先装 ZIP 里的 `wheels` 离线包（不需要网络）→ 不通再依次试清华 / 阿里云 / 腾讯云 / 华为云 / 中科大 / 官方源 6 个镜像 → 最后放宽 TLS 校验再试一次。
+
+如果仍然失败，窗口会打出真实的 pip 报错 + 一段「哪个站通、哪个站不通」的检测结果，按它说的做：
+
+1. 关掉 VPN / 代理（或者平时必须开代理的话就打开）
+2. 临时关掉 360、火绒、Defender 的实时防护一分钟
+3. 换成手机热点，再双击 `一键开始.bat`
+4. 别把文件夹放在 OneDrive 之类的同步目录里
+
+**如果同学还是报这个错**，直接让他把 `wheels` 文件夹连同整个目录一起发过去（解压后必须和 `一键开始.bat` 同级），不用重新下载。
 
 ### 其他问题
 

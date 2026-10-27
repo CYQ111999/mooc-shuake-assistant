@@ -4,13 +4,15 @@
 *.cmd   text eol=crlf
 *.ps1   text eol=crlf
 
-# 其余文本统一 LF
+# 其余文本统一 LF；纯文本说明文件给 CRLF，免得老记事本里挤成一行
 *.py    text eol=lf
 *.json  text eol=lf
 *.md    text eol=lf
-*.txt   text eol=lf
+*.txt   text eol=crlf
 
 # 二进制
 *.png   binary
 *.jpg   binary
 *.zip   binary
+*.whl   binary
+*.exe   binary

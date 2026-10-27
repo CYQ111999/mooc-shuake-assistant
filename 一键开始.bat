@@ -5,11 +5,15 @@ cd /d "%~dp0"
 set "PYTHONUTF8=1"
 set "PYTHONIOENCODING=utf-8"
 set "PIP_DISABLE_PIP_VERSION_CHECK=1"
-set "MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple"
+set "PIPOPT=--disable-pip-version-check --timeout 25 --retries 2 --prefer-binary"
+
+rem mirrors are tried one by one: network conditions differ a lot between
+rem campus / home / hotspot, so never rely on a single one.
+set "MIRRORS=https://pypi.tuna.tsinghua.edu.cn/simple https://mirrors.aliyun.com/pypi/simple https://mirrors.cloud.tencent.com/pypi/simple https://mirrors.huaweicloud.com/repository/pypi/simple https://pypi.mirrors.ustc.edu.cn/simple https://pypi.org/simple"
 
 echo ==================================================
-echo    MOOC  ShuaKe  Assistant   v1.3
-echo    (first run needs internet, about 1-3 minutes)
+echo    MOOC  ShuaKe  Assistant   v1.4
+echo    (first run: about 1-3 minutes)
 echo ==================================================
 echo.
 
@@ -33,7 +37,7 @@ set "PYLINE=%BASEPY%"
 set "PYNUM="
 set /p PYNUM=<"%TEMP%\_moocnum.txt"
 if not defined PYNUM goto :no_python
-if %PYNUM% LSS 309 goto :old_python
+if %PYNUM% LSS 310 goto :old_python
 
 "%PYEXE0%" -c "import sys;print(sys.version.split()[0])" > "%TEMP%\_moocver.txt" 2>nul
 set "PYVER="
@@ -43,8 +47,7 @@ del "%TEMP%\_moocver.txt" >nul 2>nul
 
 echo [1/3] Python found : %PYLINE%  (version %PYVER%)
 echo       location     : %PYEXE0%
-if %PYNUM% GEQ 314 echo       NOTE: Python 3.14 detected. If dependency install fails,
-if %PYNUM% GEQ 314 echo             install Python 3.12 from python.org instead.
+if %PYNUM% GEQ 314 echo       NOTE: Python 3.14 is supported, but 3.12 is the best tested one.
 echo.
 
 rem ======================================================
@@ -78,28 +81,46 @@ if defined EXTRA_PATH set "PYTHONPATH=%EXTRA_PATH%"
 
 rem ======================================================
 rem  3. dependencies
+rem
+rem  v1.4: the pip route is now layered, because the old
+rem  "tsinghua mirror then pypi.org" pair left students on
+rem  networks that block both (campus proxy, 360 / Defender
+rem  blocking python.exe, mobile hotspot DNS) with
+rem  "from versions: none".
+rem    (a) wheels\ folder shipped in the zip -> no network
+rem    (b) 6 mirrors in turn
+rem    (c) official source with relaxed TLS check
 rem ======================================================
 "%PYEXE%" -c "import playwright" >nul 2>nul
+if not errorlevel 1 goto :deps_ok
+
+echo [2/3] installing dependencies, please wait ...
+set "PIPEXTRA="
+if defined EXTRA_PATH set PIPEXTRA=--target "%EXTRA_PATH%"
+set "DEPSOK="
+
+"%PYEXE%" -m pip --version >nul 2>nul
 if errorlevel 1 (
-    echo [2/3] installing dependencies, please wait ...
-    if defined EXTRA_PATH (
-        "%PYEXE%" -m pip install --target "%EXTRA_PATH%" -r requirements.txt -i %MIRROR% -q
-        if errorlevel 1 (
-            echo       mirror failed, retry with official source ...
-            "%PYEXE%" -m pip install --target "%EXTRA_PATH%" -r requirements.txt -q
-        )
-    ) else (
-        "%PYEXE%" -m pip install -r requirements.txt -i %MIRROR% -q
-        if errorlevel 1 (
-            echo       mirror failed, retry with official source ...
-            "%PYEXE%" -m pip install -r requirements.txt -q
-        )
-    )
-    "%PYEXE%" -c "import playwright" >nul 2>nul
-    if errorlevel 1 goto :deps_failed
-) else (
-    echo [2/3] dependencies OK
+    echo       pip is missing on this Python, bootstrapping it ...
+    "%PYEXE%" -m ensurepip --upgrade >nul 2>nul
 )
+
+if exist "wheels\*.whl" call :install_offline
+if defined DEPSOK goto :deps_ok
+
+echo       offline package not usable, going online (needs internet) ...
+for %%M in (%MIRRORS%) do if not defined DEPSOK call :install_mirror %%M
+if defined DEPSOK goto :deps_ok
+
+echo       all mirrors failed, last try with relaxed TLS check ...
+echo       (the full pip error is shown below, please screenshot it)
+"%PYEXE%" -m pip install %PIPEXTRA% -r requirements.txt -i https://pypi.org/simple %PIPOPT% --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.tuna.tsinghua.edu.cn --trusted-host mirrors.aliyun.com --trusted-host mirrors.cloud.tencent.com --trusted-host mirrors.huaweicloud.com --trusted-host pypi.mirrors.ustc.edu.cn
+"%PYEXE%" -c "import playwright" >nul 2>nul
+if errorlevel 1 goto :deps_failed
+set "DEPSOK=1"
+
+:deps_ok
+echo [2/3] dependencies OK
 
 rem ======================================================
 rem  4. browser engine
@@ -128,10 +149,30 @@ exit /b %RC%
 rem ======================================================
 rem  subroutines
 rem ======================================================
+:install_offline
+rem  install straight from the wheels\ folder next to this .bat.
+rem  needs no network at all, so it works on any campus network.
+"%PYEXE%" -m pip install %PIPEXTRA% -r requirements.txt --no-index --find-links "wheels" %PIPOPT% -q
+if errorlevel 1 exit /b 0
+"%PYEXE%" -c "import playwright" >nul 2>nul
+if errorlevel 1 exit /b 0
+echo       installed from the bundled offline package
+set "DEPSOK=1"
+exit /b 0
+
+:install_mirror
+echo       trying %~1
+"%PYEXE%" -m pip install %PIPEXTRA% -r requirements.txt -i %~1 %PIPOPT% -q
+if errorlevel 1 exit /b 0
+"%PYEXE%" -c "import playwright" >nul 2>nul
+if errorlevel 1 exit /b 0
+set "DEPSOK=1"
+exit /b 0
+
 :find_python
 set "BASEPY="
 set "PYEXE0="
-for %%C in ("py -3.12" "py -3.11" "py -3.13" "py -3.10" "py -3.9" "py -3" "python3.12" "python3.11" "python3.13" "python3" "python") do (
+for %%C in ("py -3.12" "py -3.11" "py -3.13" "py -3.10" "py -3" "python3.12" "python3.11" "python3.13" "python3.10" "python3" "python") do (
     if not defined PYEXE0 call :probe %%~C
 )
 if defined PYEXE0 exit /b 0
@@ -200,7 +241,7 @@ exit /b 1
 
 :old_python
 echo [ERROR] Your Python is too old: %PYVER%
-echo         This tool needs Python 3.9 or newer.
+echo         This tool needs Python 3.10 or newer.
 echo.
 echo   Please install Python 3.12:  https://www.python.org/downloads/
 echo.
@@ -211,13 +252,26 @@ exit /b 1
 
 :deps_failed
 echo.
-echo [ERROR] Dependency install failed.
+echo [ERROR] Could not install the Playwright package.
 echo.
-echo   Try this:
-echo     1. Check your network / proxy (first run needs internet)
-echo     2. Run this .bat again
-echo     3. If it still fails, install Python 3.12 from python.org
-echo        (Python 3.14 may not have all packages ready yet)
+echo   This is a NETWORK problem, not a Python version problem.
+echo   Python %PYVER% is fine - the download never reached any server.
+echo.
+echo   Fix it in this order:
+echo     1. Turn off VPN / proxy, or turn one ON if you normally need it
+echo     2. Close 360 / Huorong / Defender real-time protection for a
+echo        minute - they often block a new python.exe from using the net
+echo     3. Connect to a phone hotspot, then run this .bat again
+echo     4. Make sure the folder is NOT inside a OneDrive / cloud folder
+echo        and that the path has no Chinese-only characters
+echo     5. Manual install in this window, then send me the output:
+echo          "%PYEXE%" -m pip install playwright -i https://mirrors.aliyun.com/pypi/simple
+echo.
+echo   pip diagnostic:
+"%PYEXE%" -m pip --version
+echo   python used: %PYEXE%
+echo   route check:
+"%PYEXE%" _netcheck.py
 echo.
 pause
 exit /b 1
